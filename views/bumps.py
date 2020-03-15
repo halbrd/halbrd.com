@@ -1,13 +1,54 @@
 from flask import Blueprint, render_template
 
+import requests
+import yaml
+import random
+
 bumps = Blueprint('bumps', __name__)
+
+BUMPS_URL = 'https://raw.githubusercontent.com/treesnetwork/bumps/master/index.js'
+
+def retrieve_bumps():
+    bumps_payload = requests.get(BUMPS_URL).text.strip()
+
+    # pre-parse checks
+    prefix = 'module.exports = '
+    suffix = ';'
+    assert bumps_payload.startswith(prefix)
+    assert bumps_payload.endswith(suffix)
+
+    # trim affixes
+    bumps_payload = bumps_payload[len(prefix) : len(suffix) * -1]
+
+    # thanks @pseudoSudo
+    bumps = yaml.safe_load(bumps_payload)
+
+    def resolve_bump_source(bump):
+        def sortable(quality):
+            # convert XXXp quality string into number
+            return int(quality.rstrip('p'))
+
+        sources_by_quality = sorted(
+            bump['source']['sources'],
+            key=lambda source: sortable(source['quality']),
+            reverse=True,
+        )
+
+        return sources_by_quality[0]['url']
+
+    bumps = [ {
+        'creator': bump.get('username'),  # not every bump has a username - store None instead of throwing KeyError
+        'source': resolve_bump_source(bump)
+    } for bump in bumps ]
+
+    return bumps
+
 
 @bumps.route('/bumps/')
 def index():
+    bumps = retrieve_bumps()
+    random.shuffle(bumps)
+
     return render_template('bumps/index.html',
-        bumps=[
-            "https://player.vimeo.com/external/249463053.hd.mp4?s=e21e00dd63ab878189d39905f9e81f4c389bec87&profile_id=174",
-            "https://player.vimeo.com/external/249463124.hd.mp4?s=c3f5c12969c711bb945314cb1b6517993936a43e&profile_id=174",
-            "https://player.vimeo.com/external/249463125.hd.mp4?s=da7b1365cf462a4afc1305a3235d675f046657fd&profile_id=174"
-        ]
+        bumps=bumps
     )

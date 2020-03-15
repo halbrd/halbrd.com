@@ -16,8 +16,9 @@ function initVideo(video) {
     video.preload = 'auto';
 
     video.onplaying = function (e) {
-        textOutput.innerHTML = bumpIndex;
-        this.nextVideo.src = bumps[++bumpIndex % bumps.length];
+        bumpsIndex = ++bumpIndex % bumps.length;
+        textOutput.innerHTML = bumps[bumpIndex]['creator'];
+        this.nextVideo.src = bumps[bumpIndex]['source'];
         this.nextVideo.pause();
     }
 
@@ -34,7 +35,7 @@ video2.nextVideo = video1;
 
 // set up video1 to play
 video1.autoplay = true;
-video1.src = bumps[bumpIndex];
+video1.src = bumps[bumpIndex]['source'];
 initVideo(video1);
 
 // set up video2 to warm up
