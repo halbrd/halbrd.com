@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}bumps{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bumps.css') }}">
+<script type="text/javascript">
+    var bumps = {{ bumps | tojson }};
+</script>
+{% endblock %}
+
+{% block body %}
+<div id="video-container">
+    <video id="video-1"></video>
+    <video id="video-2"></video>
+</div>
+<p id="text-output"></p>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/bumps.js') }}"></script>
+{% endblock %}

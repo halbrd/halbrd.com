@@ -1,6 +1,10 @@
 from flask import Flask, render_template
 
+from views.bumps import bumps
+
 app = Flask(__name__)
+
+app.register_blueprint(bumps)
 
 @app.route('/')
 def index():
