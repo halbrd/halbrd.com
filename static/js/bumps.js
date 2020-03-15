@@ -4,10 +4,10 @@
 // `bumps` will already be defined as a list of direct links to bumps
 var bumpIndex = 0;
 
-var videoContainer = document.getElementById('video-container');
-var textOutput = document.getElementById('text-output');
-var video1 = document.getElementById('video-1');
-var video2 = document.getElementById('video-2');
+var videoContainer = document.getElementsByTagName('figure')[0];
+var textOutputs = document.getElementsByTagName('figcaption');
+var video1 = document.getElementsByTagName('video')[0];
+var video2 = document.getElementsByTagName('video')[1];
 
 
 function initVideo(video) {
@@ -17,7 +17,13 @@ function initVideo(video) {
 
     video.onplaying = function (e) {
         bumpsIndex = ++bumpIndex % bumps.length;
-        textOutput.innerHTML = bumps[bumpIndex]['creator'];
+
+        for (textOutput of textOutputs) {
+            if (bumps[bumpIndex]['creator']) {
+                textOutput.innerHTML = 'Created by @' + bumps[bumpIndex]['creator'];
+            }
+        }
+
         this.nextVideo.src = bumps[bumpIndex]['source'];
         this.nextVideo.pause();
     }
