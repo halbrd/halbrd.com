@@ -1,4 +1,11 @@
-/* TODO: global colours */
+:root {
+    --bg-dark: #4C4C4C;
+    --bg-darker: #303030;
+    --bg-darkest: #202020;
+    --fg-plain: #F5F5F5;
+    --fg-highlight: #33B5E5;
+    --fg-highlight-dark: #2D9FC9;
+}
 
 /* general global styling */
 
@@ -11,4 +18,38 @@ body {
 
 ::selection {
     background: var(--fg-plain);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--fg-highlight);
+    font-weight: 400;  /* 400 is normal weight */
+}
+
+/* normal link styling */
+
+a:link, a:visited {
+    color: currentColor;
+}
+
+a:hover {
+    color: var(--fg-highlight);
+}
+
+a:active {
+    color: var(--fg-highlight-dark);
+}
+
+/* navigation link styling */
+
+nav a:link, a:visited {
+    text-decoration: none;
+    color: var(--fg-plain);
+}
+
+nav a:hover {
+    color: var(--fg-highlight);
+}
+
+nav a:active {
+    color: var(--fg-highlight-dark);
 }
