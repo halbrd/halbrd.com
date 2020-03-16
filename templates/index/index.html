@@ -7,5 +7,16 @@
 {% endblock %}
 
 {% block body %}
-<h1>halbrd.com</h1>
+<header>
+    <h1>halbrd</h1>
+    <h2>William Holt</h2>
+</header>
+
+<h1>My other homes on the internet:</h1>
+<nav>
+    {% for link in external_links %}
+    <a href="{{ link.location }}"><img src="{{ url_for('static', filename='img/' + link.img + '.png') }}" alt="{{ link.img }}"> {{ link.username }}</a>
+    {% endfor %}
+</nav>
+
 {% endblock %}
