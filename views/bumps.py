@@ -7,18 +7,16 @@ import boto3
 
 bumps = Blueprint('bumps', __name__)
 
-BUMPS_URL = 'https://raw.githubusercontent.com/treesnetwork/bumps/master/index.js'
-
 def retrieve_bumps():
     s3 = boto3.resource('s3')
-    bucket = s3.Bucket('halbrd-website')
-    url = lambda file: 'https://halbrd-website.s3-ap-southeast-2.amazonaws.com/' + file
+    bucket = s3.Bucket('halbrd-bumps')
+    url = lambda file: 'https://halbrd-bumps.s3-ap-southeast-2.amazonaws.com/' + file
 
     bumps = [ {
         # the creator field used to be used but the repo I sourced went private on github
         'creator': None,
         'source': url(bump.key)
-    } for bump in bucket.objects.all() ]
+    } for bump in list(bucket.objects.all()) ]
 
     return bumps
 
