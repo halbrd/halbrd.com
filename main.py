@@ -23,6 +23,7 @@ EXTERNAL_LINKS = [
     { 'img': 'twitch', 'username': 'halbrd', 'location': 'https://twitch.tv/halbrd' },
     { 'img': 'discord', 'username': 'halbrd#0087', 'location': 'https://discordapp.com/channels/@me/' },
     { 'img': 'xbox', 'username': 'halbrd', 'location': 'https://account.xbox.com/en-us/profile?gamertag=halbrd' },
+    { 'img': 'playstation', 'username': 'halbrd_', 'location': 'https://psnprofiles.com/halbrd_' },
 ]
 
 @app.route('/')
